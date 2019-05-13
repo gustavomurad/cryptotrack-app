@@ -12,46 +12,71 @@ class Summary extends StatefulWidget {
 }
 
 class _SummaryState extends State<Summary> {
+  bool _selectedIcon = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.market.pair),
       ),
-      body: Container(
-        child: Center(
-          child: RefreshIndicator(
-            onRefresh: () => bloc.getSummary(model: widget.market),
-            child: StreamBuilder<MarketModel>(
-              stream: bloc.summarySubject.stream,
-              builder: (context, AsyncSnapshot<MarketModel> snapshot) {
-                if (snapshot.hasData) {
-                  return Card(
-                    elevation: 0.0,
-                    child: Row(
+      body: StreamBuilder<MarketModel>(
+        stream: bloc.summarySubject.stream,
+        builder: (context, AsyncSnapshot<MarketModel> snapshot) {
+          if (snapshot.hasData) {
+            return SizedBox(
+              height: 120,
+              child: GestureDetector(
+                onTap: (){
+                  setState(() {
+                    _selectedIcon = !_selectedIcon;
+                  });
+                },
+                child: Card(
+                  elevation: 10,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Container(child: Text('${snapshot.data.pair}')),
-                            Container(child: Text('${snapshot.data.summary.highPrice}')),
-                            Container(child: Text('${snapshot.data.summary.lastPrice}')),
-                            Container(child: Text('${snapshot.data.summary.lowPrice}')),
+                            Icon(Icons.attach_money, size: 60,),
                           ],
                         ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Base name: ${snapshot.data.pairs.base.name} (${snapshot.data.pairs.base.symbol})'),
+                            Text('Quote name: ${snapshot.data.pairs.quote.name} (${snapshot.data.pairs.quote.symbol})'),
+                            Text('Hight price: ${snapshot.data.summary.highPrice}'),
+                            Text('Last price: ${snapshot.data.summary.lastPrice}'),
+                            Text('Low price: ${snapshot.data.summary.lowPrice}'),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(_selectedIcon ? Icons.star : Icons.star_border, size: 30, color: Colors.orange,),
+                          ],
+                        ),
+
                       ],
                     ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text(snapshot.error.toString());
-                } else {
-                  return Container(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            ),
-          ),
-        ),
+                  ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return Container(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }

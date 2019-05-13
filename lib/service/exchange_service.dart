@@ -3,6 +3,7 @@ import 'package:cryptotrack/model/exchange_model.dart';
 import 'package:cryptotrack/model/market_model.dart';
 import 'package:cryptotrack/model/summary_model.dart';
 import 'package:meta/meta.dart';
+import 'package:cryptotrack/model/pair_model.dart';
 
 class Service extends ServiceProvider{
 
@@ -26,10 +27,15 @@ class Service extends ServiceProvider{
   }
 
   Future<MarketModel> getSummary({@required MarketModel market}) async{
-    final response = await httpGet(service: 'markets/${market.exchange}/${market.pair}/summary');
-    final data = response.data['result'];
-    market.summary = SummaryModel.fromJson(data);
+    final responseSummary = await httpGet(service: 'markets/${market.exchange}/${market.pair}/summary');
+    final responsePairs = await httpGet(service: 'pairs/${market.pair}');
+
+    final dataSummary = responseSummary.data['result'];
+    final dataPairs = responsePairs.data['result'];
+
+    market.summary = SummaryModel.fromJson(dataSummary);
+    market.pairs = PairModel.fromJson(dataPairs);
+
     return market;
   }
-
 }
