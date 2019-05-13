@@ -45,16 +45,19 @@ class _SummaryState extends State<Summary> {
                             Icon(Icons.attach_money, size: 60,),
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text('Base name: ${snapshot.data.pairs.base.name} (${snapshot.data.pairs.base.symbol})'),
-                            Text('Quote name: ${snapshot.data.pairs.quote.name} (${snapshot.data.pairs.quote.symbol})'),
-                            Text('Hight price: ${snapshot.data.summary.highPrice}'),
-                            Text('Last price: ${snapshot.data.summary.lastPrice}'),
-                            Text('Low price: ${snapshot.data.summary.lowPrice}'),
-                          ],
+                        SizedBox(
+                          width: 245,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text('Base name: ${snapshot.data.pairs.base.name} (${snapshot.data.pairs.base.symbol})'),
+                              Text('Quote name: ${snapshot.data.pairs.quote.name} (${snapshot.data.pairs.quote.symbol})'),
+                              Text('Hight price: ${snapshot.data.summary.highPrice}'),
+                              Text('Last price: ${snapshot.data.summary.lastPrice}'),
+                              Text('Low price: ${snapshot.data.summary.lowPrice}'),
+                            ],
+                          ),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,8 +75,10 @@ class _SummaryState extends State<Summary> {
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {
-            return Container(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: Container(
+                child: CircularProgressIndicator(),
+              ),
             );
           }
         },
