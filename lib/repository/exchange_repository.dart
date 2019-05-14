@@ -1,6 +1,7 @@
 import 'package:cryptotrack/model/exchange_model.dart';
 import 'package:cryptotrack/model/market_model.dart';
 import 'package:cryptotrack/service/exchange_service.dart';
+import 'package:cryptotrack/database/market_dao.dart';
 import 'package:meta/meta.dart';
 
 class Repository{
@@ -14,5 +15,25 @@ class Repository{
 
   Future<MarketModel> getSummary({@required MarketModel market}) async{
     return await Service().getSummary(market: market);
+  }
+
+  Future<void> createOrUpdate({@required MarketModel market}) async {
+    await MarketDao().createOrUpdate(market: market);
+  }
+
+  Future<void> delete({@required MarketModel market}) async {
+    await MarketDao().delete(market: market);
+  }
+
+  Future<List<MarketModel>> markets() async{
+    List<MarketModel> markets = await MarketDao().markets();
+    List<MarketModel> list = [];
+    for(var market in markets){
+      MarketModel mm = await getSummary(market: market);
+      mm.selected = true;
+      list.add(mm);
+    }
+
+    return list;
   }
 }

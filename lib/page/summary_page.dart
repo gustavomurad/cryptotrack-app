@@ -12,8 +12,6 @@ class Summary extends StatefulWidget {
 }
 
 class _SummaryState extends State<Summary> {
-  bool _selectedIcon = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +26,9 @@ class _SummaryState extends State<Summary> {
               height: 120,
               child: GestureDetector(
                 onTap: (){
-                  setState(() {
-                    _selectedIcon = !_selectedIcon;
-                  });
+                  MarketModel _market = snapshot.data;
+                  _market.selected = !_market.selected;
+                  bloc.saveSummary(market: _market);
                 },
                 child: Card(
                   elevation: 10,
@@ -42,6 +40,7 @@ class _SummaryState extends State<Summary> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
+                            //TODO Criptocurrency icon
                             Icon(Icons.attach_money, size: 60,),
                           ],
                         ),
@@ -63,7 +62,9 @@ class _SummaryState extends State<Summary> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(_selectedIcon ? Icons.star : Icons.star_border, size: 30, color: Colors.orange,),
+                            snapshot.data.selected ?
+                              Icon(  Icons.favorite, size: 30, color: Colors.red,) :
+                              Icon(  Icons.favorite_border, size: 30, color: Colors.black,),
                           ],
                         ),
 

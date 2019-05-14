@@ -5,12 +5,36 @@ import 'package:rxdart/rxdart.dart';
 import 'package:meta/meta.dart';
 
 class Bloc {
-  final BehaviorSubject<List<ExchangeModel>> _exchangeSubject =
-      BehaviorSubject<List<ExchangeModel>>();
-  final BehaviorSubject<List<MarketModel>> _marketSubject =
-      BehaviorSubject<List<MarketModel>>();
-  final BehaviorSubject<MarketModel> _summarySubject =
-      BehaviorSubject<MarketModel>();
+  final BehaviorSubject<List<ExchangeModel>> _exchangeSubject = BehaviorSubject<List<ExchangeModel>>();
+  final BehaviorSubject<List<MarketModel>> _marketSubject = BehaviorSubject<List<MarketModel>>();
+  final BehaviorSubject<MarketModel> _summarySubject = BehaviorSubject<MarketModel>();
+  final BehaviorSubject<List<MarketModel>> _favoritesSubject = BehaviorSubject<List<MarketModel>>();
+
+  Future<void> saveSummary({@required MarketModel market}) async {
+    try {
+
+      if (market.selected) {
+        await Repository().createOrUpdate(market: market);
+      } else {
+        await Repository().delete(market: market);
+      }
+
+      await markets();
+
+      _summarySubject.sink.add(market);
+    }catch(e){
+      _summarySubject.addError(e);
+    }
+  }
+
+  Future<void> markets() async{
+    try{
+      List<MarketModel> markets = await Repository().markets();
+      _favoritesSubject.sink.add(markets);
+    }catch(e){
+      _favoritesSubject.addError(e);
+    }
+  }
 
   Future<void> getExchanges() async {
     try {
@@ -60,6 +84,7 @@ class Bloc {
   BehaviorSubject<List<ExchangeModel>> get exchangeSubject => _exchangeSubject;
   BehaviorSubject<List<MarketModel>> get marketSubject => _marketSubject;
   BehaviorSubject<MarketModel> get summarySubject => _summarySubject;
+  BehaviorSubject<List<MarketModel>> get favoritesSubject => _favoritesSubject;
 }
 
 final bloc = Bloc();
