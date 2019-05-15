@@ -10,18 +10,25 @@ class Bloc {
   final BehaviorSubject<MarketModel> _summarySubject = BehaviorSubject<MarketModel>();
   final BehaviorSubject<List<MarketModel>> _favoritesSubject = BehaviorSubject<List<MarketModel>>();
 
+  List<MarketModel> _favorites = [];
+
   Future<void> saveSummary({@required MarketModel market}) async {
     try {
-
-      if (market.selected) {
-        await Repository().createOrUpdate(market: market);
-      } else {
-        await Repository().delete(market: market);
-      }
-
-      await markets();
-
       _summarySubject.sink.add(market);
+      _favorites.add(market);
+      _favoritesSubject.sink.add(_favorites);
+
+      Repository().createOrUpdate(market: market);
+    }catch(e){
+      _summarySubject.addError(e);
+    }
+  }
+
+  Future<void> deleteMarket({@required MarketModel market}) async {
+    try{
+      Repository().delete(market: market);
+      _favorites.remove(market);
+      _favoritesSubject.sink.add(_favorites);
     }catch(e){
       _summarySubject.addError(e);
     }
@@ -30,6 +37,7 @@ class Bloc {
   Future<void> markets() async{
     try{
       List<MarketModel> markets = await Repository().markets();
+      _favorites.addAll(markets);
       _favoritesSubject.sink.add(markets);
     }catch(e){
       _favoritesSubject.addError(e);

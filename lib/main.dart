@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cryptotrack/page/exchange_page.dart';
 import 'package:cryptotrack/bloc/bloc.dart';
 import 'package:cryptotrack/model/market_model.dart';
+import 'package:cryptotrack/component/market_card.dart';
 
 void main() => runApp(MyApp());
 
@@ -66,51 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             height: 120,
                             child: GestureDetector(
                               onTap: (){
-                                MarketModel _market = snapshot.data[position];
-                                _market.selected = !_market.selected;
-                                bloc.saveSummary(market: _market);
-                              },
-                              child: Card(
-                                elevation: 10,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        //TODO Criptocurrency icon
-                                        Icon(Icons.attach_money, size: 60,),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 245,
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text('Base name: ${snapshot.data[position].pairs.base.name} (${snapshot.data[position].pairs.base.symbol})'),
-                                          Text('Quote name: ${snapshot.data[position].pairs.quote.name} (${snapshot.data[position].pairs.quote.symbol})'),
-                                          Text('Hight price: ${snapshot.data[position].summary.highPrice}'),
-                                          Text('Last price: ${snapshot.data[position].summary.lastPrice}'),
-                                          Text('Low price: ${snapshot.data[position].summary.lowPrice}'),
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        snapshot.data[position].selected ?
-                                        Icon(  Icons.favorite, size: 30, color: Colors.red,) :
-                                        Icon(  Icons.favorite_border, size: 30, color: Colors.black,),
-                                      ],
-                                    ),
-
-                                  ],
-                                ),
-                              ),
+                                final MarketModel _market = snapshot.data[position];
+                                bloc.deleteMarket(market: _market);
+                             },
+                              child: MarketCard(marketModel: snapshot.data[position],),
                             ),
                           );
                         },
@@ -138,3 +98,4 @@ class _MyHomePageState extends State<MyHomePage> {
     bloc.markets();
   }
 }
+
