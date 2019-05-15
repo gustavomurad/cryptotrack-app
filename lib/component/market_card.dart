@@ -1,5 +1,6 @@
 import 'package:cryptotrack/model/market_model.dart';
 import 'package:flutter/material.dart';
+import 'dart:io' as io;
 
 class MarketCard extends StatelessWidget {
   final MarketModel marketModel;
@@ -9,6 +10,8 @@ class MarketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _image = 'assets/images/icons/${marketModel.pairs.base.symbol}.png';
+
     return Card(
       elevation: 10,
       child: Row(
@@ -19,8 +22,7 @@ class MarketCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              //TODO Criptocurrency icon
-              Icon(Icons.attach_money, size: 60,),
+              Image(image: AssetImage(_image), fit: BoxFit.scaleDown, width: 60, height: 60,),
             ],
           ),
           SizedBox(
