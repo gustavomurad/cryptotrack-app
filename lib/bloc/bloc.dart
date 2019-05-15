@@ -5,10 +5,10 @@ import 'package:rxdart/rxdart.dart';
 import 'package:meta/meta.dart';
 
 class Bloc {
-  final BehaviorSubject<List<ExchangeModel>> _exchangeSubject = BehaviorSubject<List<ExchangeModel>>();
-  final BehaviorSubject<List<MarketModel>> _marketSubject = BehaviorSubject<List<MarketModel>>();
-  final BehaviorSubject<MarketModel> _summarySubject = BehaviorSubject<MarketModel>();
-  final BehaviorSubject<List<MarketModel>> _favoritesSubject = BehaviorSubject<List<MarketModel>>();
+  final _exchangeSubject = BehaviorSubject<List<ExchangeModel>>();
+  final _marketSubject = BehaviorSubject<List<MarketModel>>();
+  final _summarySubject = BehaviorSubject<MarketModel>();
+  final _favoritesSubject = BehaviorSubject<List<MarketModel>>();
 
   List<MarketModel> _favorites = [];
 

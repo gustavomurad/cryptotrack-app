@@ -19,10 +19,11 @@ class MarketDao extends DatabaseProvider {
         where: 'id = ?', whereArgs: [market.id]);
   }
 
-  Future<List<MarketModel>> markets() async{
+  Future<List<MarketModel>> markets() async {
     final db = await database;
 
-    final List<Map<String, dynamic>> markets = await db.query(DatabaseProvider.SUMMARY);
+    final List<Map<String, dynamic>> markets =
+        await db.query(DatabaseProvider.SUMMARY);
 
     return List.generate(markets.length, (i) {
       return MarketModel.fromJson(markets[i]);

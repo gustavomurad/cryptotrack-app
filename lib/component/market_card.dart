@@ -5,7 +5,8 @@ import 'dart:io' as io;
 class MarketCard extends StatelessWidget {
   final MarketModel marketModel;
   const MarketCard({
-    Key key, this.marketModel,
+    Key key,
+    this.marketModel,
   }) : super(key: key);
 
   @override
@@ -22,7 +23,12 @@ class MarketCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image(image: AssetImage(_image), fit: BoxFit.scaleDown, width: 60, height: 60,),
+              Image(
+                image: AssetImage(_image),
+                fit: BoxFit.scaleDown,
+                width: 60,
+                height: 60,
+              ),
             ],
           ),
           SizedBox(
@@ -31,8 +37,12 @@ class MarketCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('Base name: ${marketModel.pairs.base.name} (${marketModel.pairs.base.symbol})'),
-                Text('Quote name: ${marketModel.pairs.quote.name} (${marketModel.pairs.quote.symbol})'),
+                Text(
+                    'Base name: ${marketModel.pairs.base.name}'
+                        ' (${marketModel.pairs.base.symbol})'),
+                Text(
+                    'Quote name: ${marketModel.pairs.quote.name}'
+                        ' (${marketModel.pairs.quote.symbol})'),
                 Text('Hight price: ${marketModel.summary.highPrice}'),
                 Text('Last price: ${marketModel.summary.lastPrice}'),
                 Text('Low price: ${marketModel.summary.lowPrice}'),
@@ -43,12 +53,19 @@ class MarketCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              marketModel.selected ?
-              Icon(  Icons.favorite, size: 30, color: Colors.red,) :
-              Icon(  Icons.favorite_border, size: 30, color: Colors.black,),
+              marketModel.selected
+                  ? Icon(
+                      Icons.favorite,
+                      size: 30,
+                      color: Colors.red,
+                    )
+                  : Icon(
+                      Icons.favorite_border,
+                      size: 30,
+                      color: Colors.black,
+                    ),
             ],
           ),
-
         ],
       ),
     );
