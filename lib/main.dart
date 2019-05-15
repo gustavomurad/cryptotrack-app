@@ -65,13 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         itemBuilder: (context, position) {
                           return SizedBox(
                             height: 120,
-                            child: GestureDetector(
-                              onTap: (){
-                                final MarketModel _market = snapshot.data[position];
-                                bloc.deleteMarket(market: _market);
-                             },
-                              child: MarketCard(marketModel: snapshot.data[position],),
-                            ),
+                            child: MarketCard(marketModel: snapshot.data[position],),
                           );
                         },
                       ),

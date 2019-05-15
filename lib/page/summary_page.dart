@@ -25,14 +25,7 @@ class _SummaryState extends State<Summary> {
           if (snapshot.hasData) {
             return SizedBox(
               height: 120,
-              child: GestureDetector(
-                onTap: (){
-                  MarketModel _market = snapshot.data;
-                  _market.selected = !_market.selected;
-                  bloc.saveSummary(market: _market);
-                },
-                child: MarketCard(marketModel: snapshot.data,),
-              ),
+              child: MarketCard(marketModel: snapshot.data,),
             );
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
