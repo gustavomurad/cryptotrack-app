@@ -1,4 +1,4 @@
-class QuoteModel{
+class QuoteModel {
   int id;
   String symbol;
   String name;
@@ -6,12 +6,10 @@ class QuoteModel{
 
   QuoteModel({this.id, this.symbol, this.name, this.fiat});
 
-
   factory QuoteModel.fromJason(Map<String, dynamic> json) => QuoteModel(
-    id: json['id'],
-    symbol: json['symbol'],
-    name: json['name'],
-    fiat: json['fiat'],
-  );
-
+        id: json['id'],
+        symbol: json['symbol'],
+        name: json['name'],
+        fiat: json['fiat'],
+      );
 }

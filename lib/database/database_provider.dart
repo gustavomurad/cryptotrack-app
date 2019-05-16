@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-abstract class DatabaseProvider{
+abstract class DatabaseProvider {
   static const SUMMARY = 'summary';
 
   static Database _database;
@@ -22,9 +22,8 @@ abstract class DatabaseProvider{
 
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
-          await db.execute(
-              "CREATE TABLE $SUMMARY (id INT PRIMARY KEY, exchange TEXT, pair TEXT )"
-          );
-        });
+      await db.execute(
+          "CREATE TABLE $SUMMARY (id INT PRIMARY KEY, exchange TEXT, pair TEXT )");
+    });
   }
 }

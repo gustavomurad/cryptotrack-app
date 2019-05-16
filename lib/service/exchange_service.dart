@@ -5,31 +5,33 @@ import 'package:cryptotrack/model/summary_model.dart';
 import 'package:meta/meta.dart';
 import 'package:cryptotrack/model/pair_model.dart';
 
-class Service extends ServiceProvider{
-
+class Service extends ServiceProvider {
   Future<List<ExchangeModel>> getExchanges() async {
-    final response =  await httpGet(service: 'exchanges');
-    final data =  response.data['result'];
+    final response = await httpGet(service: 'exchanges');
+    final data = response.data['result'];
     final listExchanges = data.map((json) {
       return ExchangeModel.fromJson(json);
     }).toList();
     return listExchanges.cast<ExchangeModel>();
   }
 
-  Future<List<MarketModel>>getMarkets({@required ExchangeModel exchange}) async{
+  Future<List<MarketModel>> getMarkets(
+      {@required ExchangeModel exchange}) async {
     final response = await httpGet(service: 'markets/${exchange.symbol}');
     final data = response.data['result'];
-    final listMarkets = data.map((json){
+    final listMarkets = data.map((json) {
       return MarketModel.fromJson(json);
     }).toList();
 
     return listMarkets.cast<MarketModel>();
   }
 
-  Future<MarketModel> getSummary({@required MarketModel market}) async{
-    final responseSummary = await httpGet(service: 'markets/${market.exchange}/${market.pair}/summary');
+  Future<MarketModel> getSummary({@required MarketModel market}) async {
+    final responseSummary = await httpGet(
+        service: 'markets/${market.exchange}/${market.pair}/summary');
     final responsePairs = await httpGet(service: 'pairs/${market.pair}');
-    final responseExchange = await httpGet(service: 'exchanges/${market.exchange}');
+    final responseExchange =
+        await httpGet(service: 'exchanges/${market.exchange}');
 
     final dataSummary = responseSummary.data['result'];
     final dataPairs = responsePairs.data['result'];

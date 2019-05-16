@@ -1,4 +1,4 @@
-class SummaryModel{
+class SummaryModel {
   double lastPrice;
   double highPrice;
   double lowPrice;
@@ -7,8 +7,13 @@ class SummaryModel{
   double volume;
   double volumeQuote;
 
-  SummaryModel({this.lastPrice, this.highPrice, this.lowPrice,
-      this.changePercentage, this.changeAbsolute, this.volume,
+  SummaryModel(
+      {this.lastPrice,
+      this.highPrice,
+      this.lowPrice,
+      this.changePercentage,
+      this.changeAbsolute,
+      this.volume,
       this.volumeQuote});
 
   factory SummaryModel.fromJson(Map<String, dynamic> json) {

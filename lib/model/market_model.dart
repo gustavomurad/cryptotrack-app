@@ -25,11 +25,11 @@ class MarketModel {
         active: json['active'],
       );
 
-  Map<String, dynamic> toJson() =>{
-    'id': this.id,
-    'exchange': this.exchange,
-    'pair': this.pair,
-  };
+  Map<String, dynamic> toJson() => {
+        'id': this.id,
+        'exchange': this.exchange,
+        'pair': this.pair,
+      };
 
   @override
   bool operator ==(Object other) =>

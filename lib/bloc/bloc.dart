@@ -53,13 +53,13 @@ class Bloc {
 
   Future<void> refreshExchanges() async {
     try {
-        _exchangeSubject.sink.add(null);
-        List<ExchangeModel> exchanges = await Repository().getExchanges();
-        exchanges.sort((a, b) {
-          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
-        });
+      _exchangeSubject.sink.add(null);
+      List<ExchangeModel> exchanges = await Repository().getExchanges();
+      exchanges.sort((a, b) {
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      });
 
-        _exchangeSubject.sink.add(exchanges);
+      _exchangeSubject.sink.add(exchanges);
     } catch (e) {
       _exchangeSubject.addError(e);
     }

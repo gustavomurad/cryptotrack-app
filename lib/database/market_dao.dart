@@ -26,7 +26,6 @@ class MarketDao extends DatabaseProvider {
         where: 'id = ?', whereArgs: [market.id]);
 
     return res.isNotEmpty;
-
   }
 
   Future<List<MarketModel>> markets() async {

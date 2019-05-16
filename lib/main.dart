@@ -64,9 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           return Dismissible(
                             key: Key(position.toString()),
                             onDismissed: (direction) {
-
                               snapshot.data[position].selected = false;
-                              bloc.deleteMarket(market: snapshot.data[position]);
+                              bloc.deleteMarket(
+                                  market: snapshot.data[position]);
                             },
                             child: SizedBox(
                               height: 120,

@@ -63,11 +63,7 @@ class MarketCard extends StatelessWidget {
                   }
                 },
                 child: marketModel.selected
-                    ? Icon(
-                        Icons.star,
-                        size: 30,
-                        color: Colors.amber[700]
-                      )
+                    ? Icon(Icons.star, size: 30, color: Colors.amber[700])
                     : Icon(
                         Icons.star,
                         size: 30,

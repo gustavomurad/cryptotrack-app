@@ -27,7 +27,9 @@ class _SummaryState extends State<Summary> {
               padding: const EdgeInsets.all(10.0),
               child: SizedBox(
                 height: 120,
-                child: MarketCard(marketModel: snapshot.data,),
+                child: MarketCard(
+                  marketModel: snapshot.data,
+                ),
               ),
             );
           } else if (snapshot.hasError) {

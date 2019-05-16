@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
-abstract class ServiceProvider{
+abstract class ServiceProvider {
   static final String _baseEndpoint = 'https://api.cryptowat.ch/';
 
   Future<Response> httpGet({@required String service}) async {
@@ -9,7 +9,7 @@ abstract class ServiceProvider{
 
     final Dio dio = Dio();
     final String endpoint = _baseEndpoint + service;
-    try{
+    try {
       return await dio.get(endpoint);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
