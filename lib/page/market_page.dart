@@ -22,58 +22,60 @@ class _MarketState extends State<Market> {
       ),
       body: Container(
         constraints: BoxConstraints.expand(),
-        child: RefreshIndicator(
-          onRefresh: () => bloc.getMarkets(model: widget.exchange),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              StreamBuilder<List<MarketModel>>(
-                stream: bloc.marketSubject.stream,
-                builder: (context, AsyncSnapshot<List<MarketModel>> snapshot) {
-                  if (snapshot.hasData) {
-                    return Flexible(
-                      fit: FlexFit.tight,
-                      child: ListView.builder(
-                        padding: const EdgeInsets.all(15.0),
-                        shrinkWrap: true,
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, position) {
-                          if (snapshot.data[position].active) {
-                            return Card(
-                              elevation: 0.0,
-                              child: ListTile(
-                                title: Text('${snapshot.data[position].pair}'),
-                                subtitle:
-                                    Text('${snapshot.data[position].pair}'),
-                                trailing: Icon(
-                                  Icons.chevron_right,
-                                  size: 40,
+        child: Center(
+          child: RefreshIndicator(
+            onRefresh: () => bloc.getMarkets(model: widget.exchange),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                StreamBuilder<List<MarketModel>>(
+                  stream: bloc.marketSubject.stream,
+                  builder: (context, AsyncSnapshot<List<MarketModel>> snapshot) {
+                    if (snapshot.hasData) {
+                      return Flexible(
+                        fit: FlexFit.tight,
+                        child: ListView.builder(
+                          padding: const EdgeInsets.all(15.0),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, position) {
+                            if (snapshot.data[position].active) {
+                              return Card(
+                                elevation: 0.0,
+                                child: ListTile(
+                                  title: Text('${snapshot.data[position].pair}'),
+                                  subtitle:
+                                      Text('${snapshot.data[position].pair}'),
+                                  trailing: Icon(
+                                    Icons.chevron_right,
+                                    size: 40,
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                Summary(
+                                                    market: snapshot
+                                                        .data[position])));
+                                  },
                                 ),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Summary(
-                                                  market: snapshot
-                                                      .data[position])));
-                                },
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  } else {
-                    return Container(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-              )
-            ],
+                              );
+                            }
+                          },
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    } else {
+                      return Container(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -20,7 +20,7 @@ class _ExchangeState extends State<Exchange> {
       body: Container(
         child: Center(
           child: RefreshIndicator(
-            onRefresh: () => bloc.getExchanges(),
+            onRefresh: () => bloc.refreshExchanges(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

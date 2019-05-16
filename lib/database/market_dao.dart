@@ -19,6 +19,16 @@ class MarketDao extends DatabaseProvider {
         where: 'id = ?', whereArgs: [market.id]);
   }
 
+  Future<bool> isMarketFavorite({@required MarketModel market}) async {
+    final db = await database;
+
+    var res = await db.query(DatabaseProvider.SUMMARY,
+        where: 'id = ?', whereArgs: [market.id]);
+
+    return res.isNotEmpty;
+
+  }
+
   Future<List<MarketModel>> markets() async {
     final db = await database;
 

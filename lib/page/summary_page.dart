@@ -23,9 +23,12 @@ class _SummaryState extends State<Summary> {
         stream: bloc.summarySubject.stream,
         builder: (context, AsyncSnapshot<MarketModel> snapshot) {
           if (snapshot.hasData) {
-            return SizedBox(
-              height: 120,
-              child: MarketCard(marketModel: snapshot.data,),
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                height: 120,
+                child: MarketCard(marketModel: snapshot.data,),
+              ),
             );
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());

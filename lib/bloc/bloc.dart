@@ -19,41 +19,47 @@ class Bloc {
       _favoritesSubject.sink.add(_favorites);
 
       Repository().createOrUpdate(market: market);
-    }catch(e){
+    } catch (e) {
       _summarySubject.addError(e);
     }
   }
 
   Future<void> deleteMarket({@required MarketModel market}) async {
-    try{
+    try {
       Repository().delete(market: market);
       _summarySubject.sink.add(market);
       _favorites.remove(market);
       _favoritesSubject.sink.add(_favorites);
-    }catch(e){
+    } catch (e) {
       _summarySubject.addError(e);
     }
   }
 
-  Future<void> markets() async{
-    try{
+  Future<void> markets() async {
+    try {
       List<MarketModel> markets = await Repository().markets();
       _favorites.addAll(markets);
       _favoritesSubject.sink.add(markets);
-    }catch(e){
+    } catch (e) {
       _favoritesSubject.addError(e);
     }
   }
 
   Future<void> getExchanges() async {
-    try {
-      _exchangeSubject.sink.add(null);
-      List<ExchangeModel> exchanges = await Repository().getExchanges();
-      exchanges.sort((a, b) {
-        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
-      });
+    if (!_exchangeSubject.hasValue) {
+      refreshExchanges();
+    }
+  }
 
-      _exchangeSubject.sink.add(exchanges);
+  Future<void> refreshExchanges() async {
+    try {
+        _exchangeSubject.sink.add(null);
+        List<ExchangeModel> exchanges = await Repository().getExchanges();
+        exchanges.sort((a, b) {
+          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        });
+
+        _exchangeSubject.sink.add(exchanges);
     } catch (e) {
       _exchangeSubject.addError(e);
     }

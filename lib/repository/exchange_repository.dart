@@ -14,7 +14,10 @@ class Repository{
   }
 
   Future<MarketModel> getSummary({@required MarketModel market}) async{
-    return await Service().getSummary(market: market);
+    MarketModel marketModel =  await Service().getSummary(market: market);
+    marketModel.selected = await MarketDao().isMarketFavorite(market: marketModel);
+
+    return marketModel;
   }
 
   Future<void> createOrUpdate({@required MarketModel market}) async {
