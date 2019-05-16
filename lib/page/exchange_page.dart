@@ -32,34 +32,35 @@ class _ExchangeState extends State<Exchange> {
                       return Flexible(
                         fit: FlexFit.tight,
                         child: ListView.builder(
-                          padding: const EdgeInsets.all(15.0),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, position) {
-                            return Card(
-                              elevation: 0.0,
-                              child: ListTile(
-                                title: Text('${snapshot.data[position].name}'),
-                                subtitle:
-                                    Text('${snapshot.data[position].symbol}'),
-                                trailing: Icon(
-                                  Icons.chevron_right,
-                                  size: 40,
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Market(
-                                                  exchange: snapshot
-                                                      .data[position])));
-                                },
-                              ),
-                            );
-                          },
-                        ),
+                            padding: const EdgeInsets.all(15.0),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, position) {
+                                return Card(
+                                  elevation: 0.0,
+                                  child: ListTile(
+                                    title:
+                                        Text('${snapshot.data[position].name}'),
+                                    subtitle: Text(
+                                        '${snapshot.data[position].symbol}'),
+                                    trailing: Icon(
+                                      Icons.chevron_right,
+                                      size: 40,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  Market(
+                                                      exchange: snapshot
+                                                          .data[position])));
+                                    },
+                                  ),
+                                );
+                              }
+                           ),
                       );
                     } else if (snapshot.hasError) {
                       return Text(snapshot.error.toString());

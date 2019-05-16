@@ -27,6 +27,7 @@ class Bloc {
   Future<void> deleteMarket({@required MarketModel market}) async {
     try{
       Repository().delete(market: market);
+      _summarySubject.sink.add(market);
       _favorites.remove(market);
       _favoritesSubject.sink.add(_favorites);
     }catch(e){

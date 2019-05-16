@@ -29,12 +29,15 @@ class Service extends ServiceProvider{
   Future<MarketModel> getSummary({@required MarketModel market}) async{
     final responseSummary = await httpGet(service: 'markets/${market.exchange}/${market.pair}/summary');
     final responsePairs = await httpGet(service: 'pairs/${market.pair}');
+    final responseExchange = await httpGet(service: 'exchanges/${market.exchange}');
 
     final dataSummary = responseSummary.data['result'];
     final dataPairs = responsePairs.data['result'];
+    final dataExchange = responseExchange.data['result'];
 
     market.summary = SummaryModel.fromJson(dataSummary);
     market.pairs = PairModel.fromJson(dataPairs);
+    market.exchange = ExchangeModel.fromJson(dataExchange).name;
 
     return market;
   }

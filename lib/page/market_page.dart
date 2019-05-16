@@ -29,8 +29,7 @@ class _MarketState extends State<Market> {
             children: <Widget>[
               StreamBuilder<List<MarketModel>>(
                 stream: bloc.marketSubject.stream,
-                builder:
-                    (context, AsyncSnapshot<List<MarketModel>> snapshot) {
+                builder: (context, AsyncSnapshot<List<MarketModel>> snapshot) {
                   if (snapshot.hasData) {
                     return Flexible(
                       fit: FlexFit.tight,
@@ -39,27 +38,29 @@ class _MarketState extends State<Market> {
                         shrinkWrap: true,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, position) {
-                          return Card(
-                            elevation: 0.0,
-                            child: ListTile(
-                              title: Text('${snapshot.data[position].pair}'),
-                              subtitle:
-                                  Text('${snapshot.data[position].pair}'),
-                              trailing: Icon(
-                                Icons.chevron_right,
-                                size: 40,
+                          if (snapshot.data[position].active) {
+                            return Card(
+                              elevation: 0.0,
+                              child: ListTile(
+                                title: Text('${snapshot.data[position].pair}'),
+                                subtitle:
+                                    Text('${snapshot.data[position].pair}'),
+                                trailing: Icon(
+                                  Icons.chevron_right,
+                                  size: 40,
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Summary(
+                                                  market: snapshot
+                                                      .data[position])));
+                                },
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            Summary(
-                                                market: snapshot
-                                                    .data[position])));
-                              },
-                            ),
-                          );
+                            );
+                          }
                         },
                       ),
                     );

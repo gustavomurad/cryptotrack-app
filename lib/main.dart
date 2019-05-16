@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:cryptotrack/page/exchange_page.dart';
 import 'package:cryptotrack/bloc/bloc.dart';
-import 'package:cryptotrack/model/market_model.dart';
 import 'package:cryptotrack/component/market_card.dart';
+import 'package:cryptotrack/model/market_model.dart';
+import 'package:cryptotrack/page/exchange_page.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,7 +31,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               StreamBuilder<List<MarketModel>>(
                 stream: bloc.favoritesSubject.stream,
-                builder:
-                    (context, AsyncSnapshot<List<MarketModel>> snapshot) {
+                builder: (context, AsyncSnapshot<List<MarketModel>> snapshot) {
                   if (snapshot.hasData) {
                     return Flexible(
                       fit: FlexFit.tight,
@@ -63,9 +61,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         shrinkWrap: true,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, position) {
-                          return SizedBox(
-                            height: 120,
-                            child: MarketCard(marketModel: snapshot.data[position],),
+                          return Dismissible(
+                            key: Key(position.toString()),
+                            onDismissed: (direction) {
+
+                              snapshot.data[position].selected = false;
+                              bloc.deleteMarket(market: snapshot.data[position]);
+                            },
+                            child: SizedBox(
+                              height: 120,
+                              child: MarketCard(
+                                marketModel: snapshot.data[position],
+                              ),
+                            ),
                           );
                         },
                       ),
@@ -92,4 +100,3 @@ class _MyHomePageState extends State<MyHomePage> {
     bloc.markets();
   }
 }
-

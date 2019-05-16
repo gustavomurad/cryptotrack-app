@@ -1,6 +1,7 @@
 import 'package:cryptotrack/model/market_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cryptotrack/bloc/bloc.dart';
+import 'dart:io' as io;
 
 class MarketCard extends StatelessWidget {
   final MarketModel marketModel;
@@ -11,8 +12,6 @@ class MarketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String _image = 'assets/images/icons/${marketModel.pairs.base.symbol}.png';
-
     return Card(
       elevation: 10,
       child: Row(
@@ -24,7 +23,8 @@ class MarketCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image(
-                image: AssetImage(_image),
+                image: AssetImage(
+                    'assets/images/icons/${marketModel.pairs.base.symbol}.png'),
                 fit: BoxFit.scaleDown,
                 width: 60,
                 height: 60,
@@ -37,12 +37,11 @@ class MarketCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                    'Base name: ${marketModel.pairs.base.name}'
-                        ' (${marketModel.pairs.base.symbol})'),
-                Text(
-                    'Quote name: ${marketModel.pairs.quote.name}'
-                        ' (${marketModel.pairs.quote.symbol})'),
+                Text('Exchange: ${marketModel.exchange}'),
+                Text('Base name: ${marketModel.pairs.base.name}'
+                    ' (${marketModel.pairs.base.symbol})'),
+                Text('Quote name: ${marketModel.pairs.quote.name}'
+                    ' (${marketModel.pairs.quote.symbol})'),
                 Text('Hight price: ${marketModel.summary.highPrice}'),
                 Text('Last price: ${marketModel.summary.lastPrice}'),
                 Text('Low price: ${marketModel.summary.lowPrice}'),
@@ -54,25 +53,26 @@ class MarketCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               GestureDetector(
-                onTap: (){
-                  if(marketModel.selected) {
+                onTap: () {
+                  if (marketModel.selected) {
+                    marketModel.selected = false;
                     bloc.deleteMarket(market: marketModel);
-                  }else{
+                  } else {
                     marketModel.selected = true;
                     bloc.saveSummary(market: marketModel);
                   }
                 },
                 child: marketModel.selected
                     ? Icon(
-                  Icons.favorite,
-                  size: 30,
-                  color: Colors.red,
-                )
+                        Icons.star,
+                        size: 30,
+                        color: Colors.amber[700]
+                      )
                     : Icon(
-                  Icons.favorite_border,
-                  size: 30,
-                  color: Colors.black,
-                ),
+                        Icons.star,
+                        size: 30,
+                        color: Colors.grey,
+                      ),
               ),
             ],
           ),
