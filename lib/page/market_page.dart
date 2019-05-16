@@ -40,7 +40,6 @@ class _MarketState extends State<Market> {
                           shrinkWrap: true,
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, position) {
-                            if (snapshot.data[position].active) {
                               return Card(
                                 elevation: 0.0,
                                 child: ListTile(
@@ -64,7 +63,6 @@ class _MarketState extends State<Market> {
                                 ),
                               );
                             }
-                          },
                         ),
                       );
                     } else if (snapshot.hasError) {
