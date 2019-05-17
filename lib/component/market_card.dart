@@ -44,6 +44,7 @@ class MarketCard extends StatelessWidget {
                 Text('Hight price: ${marketModel.summary.highPrice}'),
                 Text('Last price: ${marketModel.summary.lastPrice}'),
                 Text('Low price: ${marketModel.summary.lowPrice}'),
+                Text('Change percentage: ${marketModel.summary.changePercentage.toStringAsPrecision(2)}%'),
               ],
             ),
           ),
