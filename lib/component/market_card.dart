@@ -22,9 +22,8 @@ class MarketCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image(
-                image: AssetImage(
-                    'assets/images/icons/${marketModel.pairs.base.symbol}.png'),
+              Image.asset(
+                'assets/images/icons/${marketModel.pairs.base.symbol}.png',
                 fit: BoxFit.scaleDown,
                 width: 60,
                 height: 60,
@@ -64,11 +63,7 @@ class MarketCard extends StatelessWidget {
                 },
                 child: marketModel.selected
                     ? Icon(Icons.star, size: 30, color: Colors.amber[700])
-                    : Icon(
-                        Icons.star,
-                        size: 30,
-                        color: Colors.grey,
-                      ),
+                    : Icon(Icons.star, size: 30, color: Colors.grey),
               ),
             ],
           ),
