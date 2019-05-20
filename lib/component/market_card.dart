@@ -37,14 +37,13 @@ class MarketCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text('Exchange: ${marketModel.exchange}'),
-                Text('Base name: ${marketModel.pairs.base.name}'
-                    ' (${marketModel.pairs.base.symbol})'),
-                Text('Quote name: ${marketModel.pairs.quote.name}'
-                    ' (${marketModel.pairs.quote.symbol})'),
-                Text('Hight price: ${marketModel.summary.highPrice}'),
-                Text('Last price: ${marketModel.summary.lastPrice}'),
-                Text('Low price: ${marketModel.summary.lowPrice}'),
-                Text('Change percentage: ${marketModel.summary.changePercentage.toStringAsPrecision(2)}%'),
+                Text('Name: ${marketModel.pairs.base.name}'
+                    ' Pair: ${marketModel.pairs.base.symbol} / ${marketModel.pairs.quote.symbol}'),
+                Text('Hight: ${marketModel.summary.highPrice.toStringAsPrecision(4)} '
+                    'Last: ${marketModel.summary.lastPrice.toStringAsPrecision(4)} '
+                    'Low: ${marketModel.summary.lowPrice.toStringAsPrecision(4)}'),
+                Text('Change percentage: '
+                    '${marketModel.summary.changePercentage.toStringAsPrecision(2)}%'),
               ],
             ),
           ),
