@@ -1,7 +1,6 @@
+import 'package:cryptotrack/bloc/bloc.dart';
 import 'package:cryptotrack/model/market_model.dart';
 import 'package:flutter/material.dart';
-import 'package:cryptotrack/bloc/bloc.dart';
-import 'dart:io' as io;
 
 class MarketCard extends StatelessWidget {
   final MarketModel marketModel;
@@ -39,7 +38,8 @@ class MarketCard extends StatelessWidget {
                 Text('Exchange: ${marketModel.exchange}'),
                 Text('Name: ${marketModel.pairs.base.name}'
                     ' Pair: ${marketModel.pairs.base.symbol} / ${marketModel.pairs.quote.symbol}'),
-                Text('Hight: ${marketModel.summary.highPrice.toStringAsPrecision(4)} '
+                Text(
+                    'Hight: ${marketModel.summary.highPrice.toStringAsPrecision(4)} '
                     'Last: ${marketModel.summary.lastPrice.toStringAsPrecision(4)} '
                     'Low: ${marketModel.summary.lowPrice.toStringAsPrecision(4)}'),
                 Text('Change percentage: '

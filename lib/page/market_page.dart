@@ -36,10 +36,10 @@ class _MarketState extends State<Market> {
                       return Flexible(
                         fit: FlexFit.tight,
                         child: ListView.builder(
-                          padding: const EdgeInsets.all(15.0),
-                          shrinkWrap: true,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, position) {
+                            padding: const EdgeInsets.all(15.0),
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, position) {
                               return Card(
                                 elevation: 0.0,
                                 child: ListTile(
@@ -62,8 +62,7 @@ class _MarketState extends State<Market> {
                                   },
                                 ),
                               );
-                            }
-                        ),
+                            }),
                       );
                     } else if (snapshot.hasError) {
                       return Text(snapshot.error.toString());
