@@ -1,6 +1,7 @@
 import 'package:cryptotrack/bloc/bloc.dart';
 import 'package:cryptotrack/model/market_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class MarketCard extends StatelessWidget {
   final MarketModel marketModel;
@@ -11,6 +12,11 @@ class MarketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final highPrice = FlutterMoneyFormatter(amount: marketModel.summary.highPrice);
+    final lastPrice = FlutterMoneyFormatter(amount: marketModel.summary.lastPrice);
+    final lowPrice = FlutterMoneyFormatter(amount: marketModel.summary.lowPrice);
+    final changePercentage = FlutterMoneyFormatter(amount: marketModel.summary.changePercentage);
+
     return Card(
       elevation: 10,
       child: Row(
@@ -39,11 +45,12 @@ class MarketCard extends StatelessWidget {
                 Text('Name: ${marketModel.pairs.base.name}'
                     ' Pair: ${marketModel.pairs.base.symbol} / ${marketModel.pairs.quote.symbol}'),
                 Text(
-                    'Hight: ${marketModel.summary.highPrice.toStringAsPrecision(4)} '
-                    'Last: ${marketModel.summary.lastPrice.toStringAsPrecision(4)} '
-                    'Low: ${marketModel.summary.lowPrice.toStringAsPrecision(4)}'),
-                Text('Change percentage: '
-                    '${marketModel.summary.changePercentage.toStringAsPrecision(2)}%'),
+                    'Hight: ${highPrice.output.nonSymbol} '
+                    'Last: ${lastPrice.output.nonSymbol} '
+                    'Low: ${lowPrice.output.nonSymbol}'),
+                Text(
+                    'Change percentage: ${changePercentage.output.nonSymbol}%'
+                ),
               ],
             ),
           ),

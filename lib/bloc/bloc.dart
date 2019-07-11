@@ -14,11 +14,13 @@ class Bloc {
 
   Future<void> saveSummary({@required MarketModel market}) async {
     try {
+      await Repository().createOrUpdate(market: market);
+
       _summarySubject.sink.add(market);
       _favorites.add(market);
       _favoritesSubject.sink.add(_favorites);
 
-      Repository().createOrUpdate(market: market);
+
     } catch (e) {
       _summarySubject.addError(e);
     }
@@ -26,7 +28,7 @@ class Bloc {
 
   Future<void> deleteMarket({@required MarketModel market}) async {
     try {
-      Repository().delete(market: market);
+      await Repository().delete(market: market);
       _summarySubject.sink.add(market);
       _favorites.remove(market);
       _favoritesSubject.sink.add(_favorites);
