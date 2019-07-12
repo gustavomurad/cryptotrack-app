@@ -65,13 +65,16 @@ class _MyHomePageState extends State<MyHomePage> {
                             key: Key(position.toString()),
                             onDismissed: (direction) {
                               snapshot.data[position].selected = false;
-                              bloc.deleteMarket(
+                              bloc.deleteSummary(
                                   market: snapshot.data[position]);
                             },
                             child: SizedBox(
                               height: 120,
                               child: MarketCard(
                                 marketModel: snapshot.data[position],
+                                onPressed: (){
+                                  bloc.deleteSummary(market: snapshot.data[position]);
+                                },
                               ),
                             ),
                           );

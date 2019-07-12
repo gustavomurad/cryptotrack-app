@@ -23,14 +23,24 @@ class _SummaryState extends State<Summary> {
         stream: bloc.summarySubject,
         builder: (context, AsyncSnapshot<MarketModel> snapshot) {
           if (snapshot.hasData) {
-            return Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: SizedBox(
-                height: 120,
-                child: MarketCard(
-                  marketModel: snapshot.data,
+            return WillPopScope(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SizedBox(
+                  height: 120,
+                  child: MarketCard(
+                    marketModel: snapshot.data,
+                    onPressed: ()async{
+                      await bloc.selectSummary(market: snapshot.data);
+                      },
+                  ),
                 ),
               ),
+              onWillPop: () async{
+                snapshot.data.selected ? await bloc.saveSummary(market: snapshot.data) : await bloc.deleteSummary(market: snapshot.data);
+
+                return new Future(() => true);
+              },
             );
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());

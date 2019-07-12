@@ -1,13 +1,15 @@
-import 'package:cryptotrack/bloc/bloc.dart';
 import 'package:cryptotrack/model/market_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class MarketCard extends StatelessWidget {
   final MarketModel marketModel;
+  final VoidCallback onPressed;
+
   const MarketCard({
     Key key,
     this.marketModel,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -61,15 +63,7 @@ class MarketCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               GestureDetector(
-                onTap: () {
-                  if (marketModel.selected) {
-                    marketModel.selected = false;
-                    bloc.deleteMarket(market: marketModel);
-                  } else {
-                    marketModel.selected = true;
-                    bloc.saveSummary(market: marketModel);
-                  }
-                },
+                onTap: onPressed,
                 child: marketModel.selected
                     ? Icon(Icons.star, size: 30, color: Colors.amber[700])
                     : Icon(Icons.star, size: 30, color: Colors.grey),

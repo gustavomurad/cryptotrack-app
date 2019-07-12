@@ -12,6 +12,11 @@ class Bloc {
 
   List<MarketModel> _favorites = [];
 
+  selectSummary({@required MarketModel market}) async{
+    market.selected = !market.selected;
+    _summarySubject.sink.add(market);
+  }
+
   saveSummary({@required MarketModel market}) async {
     try {
       await Repository().createOrUpdate(market: market);
@@ -23,10 +28,9 @@ class Bloc {
     }
   }
 
-  deleteMarket({@required MarketModel market}) async {
+  deleteSummary({@required MarketModel market}) async {
     try {
       await Repository().delete(market: market);
-      _summarySubject.sink.add(market);
       _favorites.remove(market);
       _favoritesSubject.sink.add(_favorites);
     } catch (e) {
