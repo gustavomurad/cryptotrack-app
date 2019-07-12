@@ -72,8 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               height: 120,
                               child: MarketCard(
                                 marketModel: snapshot.data[position],
-                                onPressed: (){
-                                  bloc.deleteSummary(market: snapshot.data[position]);
+                                onPressed: () {
+                                  bloc.deleteSummary(
+                                      market: snapshot.data[position]);
                                 },
                               ),
                             ),

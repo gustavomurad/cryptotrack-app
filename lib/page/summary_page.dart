@@ -30,14 +30,16 @@ class _SummaryState extends State<Summary> {
                   height: 120,
                   child: MarketCard(
                     marketModel: snapshot.data,
-                    onPressed: ()async{
+                    onPressed: () async {
                       await bloc.selectSummary(market: snapshot.data);
-                      },
+                    },
                   ),
                 ),
               ),
-              onWillPop: () async{
-                snapshot.data.selected ? await bloc.saveSummary(market: snapshot.data) : await bloc.deleteSummary(market: snapshot.data);
+              onWillPop: () async {
+                snapshot.data.selected
+                    ? await bloc.saveSummary(market: snapshot.data)
+                    : await bloc.deleteSummary(market: snapshot.data);
 
                 return new Future(() => true);
               },

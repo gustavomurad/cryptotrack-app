@@ -12,7 +12,7 @@ class Bloc {
 
   List<MarketModel> _favorites = [];
 
-  selectSummary({@required MarketModel market}) async{
+  selectSummary({@required MarketModel market}) async {
     market.selected = !market.selected;
     _summarySubject.sink.add(market);
   }
