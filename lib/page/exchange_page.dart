@@ -25,7 +25,7 @@ class _ExchangeState extends State<Exchange> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 StreamBuilder<List<ExchangeModel>>(
-                  stream: bloc.exchangeSubject.stream,
+                  stream: bloc.exchangeSubject,
                   builder:
                       (context, AsyncSnapshot<List<ExchangeModel>> snapshot) {
                     if (snapshot.hasData) {

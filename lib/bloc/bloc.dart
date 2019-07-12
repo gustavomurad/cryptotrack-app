@@ -12,7 +12,7 @@ class Bloc {
 
   List<MarketModel> _favorites = [];
 
-  Future<void> saveSummary({@required MarketModel market}) async {
+  saveSummary({@required MarketModel market}) async {
     try {
       await Repository().createOrUpdate(market: market);
       _summarySubject.sink.add(market);
@@ -23,7 +23,7 @@ class Bloc {
     }
   }
 
-  Future<void> deleteMarket({@required MarketModel market}) async {
+  deleteMarket({@required MarketModel market}) async {
     try {
       await Repository().delete(market: market);
       _summarySubject.sink.add(market);
@@ -34,7 +34,7 @@ class Bloc {
     }
   }
 
-  Future<void> markets() async {
+  markets() async {
     try {
       List<MarketModel> markets = await Repository().markets();
       _favorites.addAll(markets);
@@ -44,13 +44,13 @@ class Bloc {
     }
   }
 
-  Future<void> getExchanges() async {
+  getExchanges() async {
     if (!_exchangeSubject.hasValue) {
       refreshExchanges();
     }
   }
 
-  Future<void> refreshExchanges() async {
+  refreshExchanges() async {
     try {
       _exchangeSubject.sink.add(null);
       List<ExchangeModel> exchanges = await Repository().getExchanges();
@@ -63,7 +63,7 @@ class Bloc {
     }
   }
 
-  Future<void> getMarkets({@required ExchangeModel model}) async {
+  getMarkets({@required ExchangeModel model}) async {
     try {
       _marketSubject.sink.add(null);
       List<MarketModel> markets =
@@ -77,7 +77,7 @@ class Bloc {
     }
   }
 
-  Future<void> getSummary({@required MarketModel model}) async {
+  getSummary({@required MarketModel model}) async {
     try {
       _summarySubject.sink.add(null);
       MarketModel market = await Repository().getSummary(market: model);
@@ -90,12 +90,14 @@ class Bloc {
   dispose() {
     _exchangeSubject.close();
     _marketSubject.close();
+    _summarySubject.close();
+    _favoritesSubject.close();
   }
 
-  BehaviorSubject<List<ExchangeModel>> get exchangeSubject => _exchangeSubject;
-  BehaviorSubject<List<MarketModel>> get marketSubject => _marketSubject;
-  BehaviorSubject<MarketModel> get summarySubject => _summarySubject;
-  BehaviorSubject<List<MarketModel>> get favoritesSubject => _favoritesSubject;
+  get exchangeSubject => _exchangeSubject.stream;
+  get marketSubject => _marketSubject.stream;
+  get summarySubject => _summarySubject.stream;
+  get favoritesSubject => _favoritesSubject.stream;
 }
 
 final bloc = Bloc();

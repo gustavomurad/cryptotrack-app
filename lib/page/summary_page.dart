@@ -20,7 +20,7 @@ class _SummaryState extends State<Summary> {
         title: Text(widget.market.pair),
       ),
       body: StreamBuilder<MarketModel>(
-        stream: bloc.summarySubject.stream,
+        stream: bloc.summarySubject,
         builder: (context, AsyncSnapshot<MarketModel> snapshot) {
           if (snapshot.hasData) {
             return Padding(

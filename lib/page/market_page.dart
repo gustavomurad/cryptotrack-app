@@ -29,7 +29,7 @@ class _MarketState extends State<Market> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 StreamBuilder<List<MarketModel>>(
-                  stream: bloc.marketSubject.stream,
+                  stream: bloc.marketSubject,
                   builder:
                       (context, AsyncSnapshot<List<MarketModel>> snapshot) {
                     if (snapshot.hasData) {
