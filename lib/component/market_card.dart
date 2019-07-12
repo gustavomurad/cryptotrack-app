@@ -45,7 +45,7 @@ class MarketCard extends StatelessWidget {
                 Text('Name: ${marketModel.pairs.base.name}'
                     ' Pair: ${marketModel.pairs.base.symbol} / ${marketModel.pairs.quote.symbol}'),
                 Text(
-                    'Hight: ${highPrice.output.nonSymbol} '
+                    'High: ${highPrice.output.nonSymbol} '
                     'Last: ${lastPrice.output.nonSymbol} '
                     'Low: ${lowPrice.output.nonSymbol}'),
                 Text(

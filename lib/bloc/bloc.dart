@@ -15,12 +15,9 @@ class Bloc {
   Future<void> saveSummary({@required MarketModel market}) async {
     try {
       await Repository().createOrUpdate(market: market);
-
       _summarySubject.sink.add(market);
       _favorites.add(market);
       _favoritesSubject.sink.add(_favorites);
-
-
     } catch (e) {
       _summarySubject.addError(e);
     }
@@ -60,7 +57,6 @@ class Bloc {
       exchanges.sort((a, b) {
         return a.name.toLowerCase().compareTo(b.name.toLowerCase());
       });
-
       _exchangeSubject.sink.add(exchanges);
     } catch (e) {
       _exchangeSubject.addError(e);
@@ -75,7 +71,6 @@ class Bloc {
       markets.sort((a, b) {
         return a.pair.toLowerCase().compareTo(b.pair.toLowerCase());
       });
-
       _marketSubject.sink.add(markets);
     } catch (e) {
       _marketSubject.addError(e);
@@ -86,7 +81,6 @@ class Bloc {
     try {
       _summarySubject.sink.add(null);
       MarketModel market = await Repository().getSummary(market: model);
-
       _summarySubject.sink.add(market);
     } catch (e) {
       _summarySubject.addError(e);
