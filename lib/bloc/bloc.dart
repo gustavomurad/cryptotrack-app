@@ -38,7 +38,7 @@ class Bloc {
     }
   }
 
-  removeData()async{
+  removeData() async {
     _summarySubject.sink.add(null);
     _marketSubject.sink.add(null);
   }
