@@ -38,6 +38,11 @@ class Bloc {
     }
   }
 
+  removeData()async{
+    _summarySubject.sink.add(null);
+    _marketSubject.sink.add(null);
+  }
+
   markets() async {
     try {
       List<MarketModel> markets = await Repository().markets();

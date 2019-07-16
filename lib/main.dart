@@ -98,6 +98,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+    bloc.dispose();
+  }
+
   @override
   void initState() {
     super.initState();

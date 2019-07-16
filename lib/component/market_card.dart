@@ -24,7 +24,7 @@ class MarketCard extends StatelessWidget {
         FlutterMoneyFormatter(amount: marketModel.summary.changePercentage);
 
     return Card(
-      elevation: 10,
+      elevation: 0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
