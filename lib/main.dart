@@ -1,8 +1,8 @@
 import 'package:cryptotrack/bloc/bloc.dart';
-import 'package:cryptotrack/component/market_card.dart';
 import 'package:cryptotrack/model/market_model.dart';
 import 'package:cryptotrack/page/exchange_page.dart';
 import 'package:flutter/material.dart';
+import 'package:cryptotrack/component/market_list_item.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,9 +31,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>();
+  bool _confirmDismiss = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -61,23 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         shrinkWrap: true,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, position) {
-                          return Dismissible(
-                            key: Key(position.toString()),
-                            onDismissed: (direction) {
-                              snapshot.data[position].selected = false;
-                              bloc.deleteSummary(
-                                  market: snapshot.data[position]);
-                            },
-                            child: SizedBox(
-                              height: 120,
-                              child: MarketCard(
-                                marketModel: snapshot.data[position],
-                                onPressed: () {
-                                  bloc.deleteSummary(
-                                      market: snapshot.data[position]);
-                                },
-                              ),
-                            ),
+                          return MarketListItem(
+                            item: snapshot.data[position],
+                            onEdit: _handleArchive,
+                            onDelete: _handleDelete,
+                            dismissDirection: DismissDirection.startToEnd,
+                            confirmDismiss: _confirmDismiss,
                           );
                         },
                       ),
@@ -86,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Text(snapshot.error.toString());
                   } else {
                     return Container(
-                      child: CircularProgressIndicator(),
+                      child: Container(),
                     );
                   }
                 },
@@ -96,6 +90,27 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  void _handleArchive(MarketModel item) {
+    //TODO Edit code here!
+  }
+
+  void _handleDelete(MarketModel item) {
+    bloc.deleteSummary(market: item..selected = false);
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text('You deleted item ${item.pair}'),
+      action: SnackBarAction(
+        label: 'UNDO',
+        onPressed: () {
+          handleUndo(item);
+        },
+      ),
+    ));
+  }
+
+  void handleUndo(MarketModel item) {
+    bloc.saveSummary(market: item..selected = true);
   }
 
   @override

@@ -76,22 +76,36 @@ class _ExchangeState extends State<Exchange> {
                               child: Text(model.pair),
                             );
                           }).toList();
+
+                          return DropdownButtonFormField<MarketModel>(
+                            decoration: const InputDecoration(
+                              border: UnderlineInputBorder(),
+                              filled: false,
+                              labelText: 'Markets.',
+                            ),
+                            items: _items,
+                            onChanged: (MarketModel newValue) {
+                              bloc.getSummary(model: newValue);
+                              setState(() {
+                                _market = newValue;
+                              });
+                            },
+                            value: _market,
+                          );
+                        } else {
+                          if (_exchange != null) {
+                            return Center(
+                              child: Container(
+                                child: CircularProgressIndicator(),
+                                padding: EdgeInsets.all(50),
+                              ),
+                            );
+                          } else {
+                            return Container(
+                              child: null,
+                            );
+                          }
                         }
-                        return DropdownButtonFormField<MarketModel>(
-                          decoration: const InputDecoration(
-                            border: UnderlineInputBorder(),
-                            filled: false,
-                            labelText: 'Markets.',
-                          ),
-                          items: _items,
-                          onChanged: (MarketModel newValue) {
-                            bloc.getSummary(model: newValue);
-                            setState(() {
-                              _market = newValue;
-                            });
-                          },
-                          value: _market,
-                        );
                       }),
                   StreamBuilder<MarketModel>(
                     stream: bloc.summarySubject,
@@ -120,11 +134,18 @@ class _ExchangeState extends State<Exchange> {
                       } else if (snapshot.hasError) {
                         return Text(snapshot.error.toString());
                       } else {
-                        return Center(
-                          child: Container(
+                        if (_market != null) {
+                          return Center(
+                            child: Container(
+                              child: CircularProgressIndicator(),
+                              padding: EdgeInsets.all(50),
+                            ),
+                          );
+                        } else {
+                          return Container(
                             child: null,
-                          ),
-                        );
+                          );
+                        }
                       }
                     },
                   ),

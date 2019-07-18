@@ -32,7 +32,10 @@ class Bloc {
     try {
       await Repository().delete(market: market);
       _favorites.remove(market);
-      _favoritesSubject.sink.add(_favorites);
+      if(_favorites.isEmpty)
+        _favoritesSubject.sink.add(null);
+      else
+        _favoritesSubject.sink.add(_favorites);
     } catch (e) {
       _summarySubject.addError(e);
     }
