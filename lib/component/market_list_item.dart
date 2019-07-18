@@ -108,13 +108,14 @@ class MarketListItem extends StatelessWidget {
           actions: <Widget>[
             FlatButton(
               color: theme.buttonColor,
-              child: const Text('Yes'),
+              child: Text(action.substring(0, 1).toUpperCase() +
+                  action.substring(1, action.length)),
               onPressed: () {
                 Navigator.pop(context, true);
               },
             ),
             FlatButton(
-              child: const Text('No'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.pop(context, false);
               },
