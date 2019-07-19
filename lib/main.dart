@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         itemBuilder: (context, position) {
                           return MarketListItem(
                             item: snapshot.data[position],
-                            onEdit: _handleArchive,
+                            onEdit: _handleEdit,
                             onDelete: _handleDelete,
                             dismissDirection: DismissDirection.startToEnd,
                             confirmDismiss: _confirmDismiss,
@@ -96,12 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _handleArchive(MarketModel item) {
+  void _handleEdit(MarketModel item) {
     //TODO Edit code here!
   }
 
   void _handleDelete(MarketModel item) {
-    bloc.deleteSummary(market: item..selected = false);
+    bloc.deleteSummary(market: item);
     _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text('You deleted item ${item.exchange} / ${item.pair}'),
       action: SnackBarAction(
