@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               StreamBuilder<List<MarketModel>>(
-                stream: bloc.favoritesSubject.stream,
+                stream: bloc.favoritesSubject,
                 builder: (context, AsyncSnapshot<List<MarketModel>> snapshot) {
                   if (snapshot.hasData) {
                     return Flexible(
@@ -79,9 +79,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   } else if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
                   } else {
-                    return Container(
-                      child: Container(),
-                    );
+                    if (snapshot.data == null) {
+                      return Container(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return Container();
+                    }
                   }
                 },
               )
@@ -99,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _handleDelete(MarketModel item) {
     bloc.deleteSummary(market: item..selected = false);
     _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text('You deleted item ${item.pair}'),
+      content: Text('You deleted item ${item.exchange} / ${item.pair}'),
       action: SnackBarAction(
         label: 'UNDO',
         onPressed: () {

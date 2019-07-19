@@ -1,6 +1,7 @@
 import 'package:cryptotrack/model/market_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+import 'package:flutter/services.dart';
 
 class MarketCard extends StatelessWidget {
   final MarketModel marketModel;
@@ -33,12 +34,18 @@ class MarketCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset(
-                'assets/images/icons/${marketModel.pairs.base.symbol}.png',
-                fit: BoxFit.scaleDown,
-                width: 60,
-                height: 60,
-              ),
+              FutureBuilder(
+                  future: _loadImage(asset: marketModel.pairs.base.symbol),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData)
+                      return snapshot.data;
+                    else
+                      return SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircularProgressIndicator(),
+                      );
+                  }),
             ],
           ),
           SizedBox(
@@ -58,20 +65,27 @@ class MarketCard extends StatelessWidget {
               ],
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              GestureDetector(
-                onTap: onPressed,
-                child: marketModel.selected
-                    ? Icon(Icons.star, size: 30, color: Colors.amber[700])
-                    : Icon(Icons.star, size: 30, color: Colors.grey),
-              ),
-            ],
-          ),
         ],
       ),
     );
+  }
+
+  Future<Image> _loadImage({@required String asset}) async {
+    String path = 'assets/images/icons/$asset.png';
+    return rootBundle.load(path).then((value) {
+      return Image.memory(
+        value.buffer.asUint8List(),
+        fit: BoxFit.scaleDown,
+        width: 60,
+        height: 60,
+      );
+    }).catchError((_) {
+      return Image.asset(
+        "assets/images/icons/placeholder.png",
+        fit: BoxFit.scaleDown,
+        width: 60,
+        height: 60,
+      );
+    });
   }
 }
