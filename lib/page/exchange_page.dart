@@ -17,27 +17,30 @@ class _ExchangeState extends State<Exchange> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Exchanges'),
-      ),
-      body: Container(
-        child: Center(
-          child: RefreshIndicator(
-            onRefresh: () => bloc.refreshExchanges(),
-            child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  _getExchanges(),
-                  _getMarkets(),
-                  _getCard(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _saveButton(),
-                ],
+    return Hero(
+      tag: 'addCoin',
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Exchanges'),
+        ),
+        body: Container(
+          child: Center(
+            child: RefreshIndicator(
+              onRefresh: () => bloc.refreshExchanges(),
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    _getExchanges(),
+                    _getMarkets(),
+                    _getCard(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _saveButton(),
+                  ],
+                ),
               ),
             ),
           ),

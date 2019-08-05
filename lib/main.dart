@@ -40,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       key: _scaffoldKey,
       floatingActionButton: FloatingActionButton(
+        heroTag: 'addCoin',
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.pushNamed(context, Exchange.routeName);
@@ -59,8 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 stream: bloc.favoritesSubject,
                 builder: (context, AsyncSnapshot<List<MarketModel>> snapshot) {
                   if (snapshot.hasData) {
-                    return Flexible(
-                      fit: FlexFit.tight,
+                    return Expanded(
                       child: ListView.builder(
                         padding: const EdgeInsets.all(15.0),
                         shrinkWrap: true,
